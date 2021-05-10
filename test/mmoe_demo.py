@@ -3,7 +3,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.metrics import AUC
 from tensorflow.keras.callbacks import EarlyStopping
 
-from mtrec.models.mmoe import MMoE
+from mtrec.models import MMoE
 from utils import build_census
 
 import os
@@ -15,8 +15,8 @@ def main():
     """
         ========================= Hyper Parameters =======================
     """
-    train_file = 'data/census/census-income.data'
-    test_file = 'data/census/census-income.test'
+    train_file = 'data/census/census-income.data.gz'
+    test_file = 'data/census/census-income.test.gz'
 
     embed_dim = 4
     num_experts = 8

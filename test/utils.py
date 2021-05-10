@@ -48,6 +48,6 @@ def build_census(train_file, test_file, embed_dim=8):
     return sparse_feature_columns, (train_X, train_y), (test_X, test_y)
 
 
-# train_file = 'data/census/census-income.data'
-# test_file = 'data/census/census-income.test'
+# train_file = 'data/census/census-income.data.gz'
+# test_file = 'data/census/census-income.test.gz'
 # build_census(train_file, test_file)
