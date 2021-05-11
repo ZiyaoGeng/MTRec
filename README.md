@@ -27,10 +27,8 @@ MTRec is a simple package about multi-task recommendation.
 You can install mtrec package,
 
 ```
-pip install -i https://test.pypi.org/simple/ mtrec
+pip install -i mtrec
 ```
-
-this is the testing phase now.
 
 ### Example
 
