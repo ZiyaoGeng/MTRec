@@ -32,13 +32,61 @@ The default dependency that MTRec has are Tensorflow2.x.
 
 There are some [simple tests](test) to use mtrec package.
 
+**First，Dataset**. 
+
+1. MTREC stipulates that features must be sparse discrete features, and continuous features need discrete buckets.
+2. The dataset is output in the form of a dictionary, for example`{'name1':[n1,n2,...], 'name2':[n1,n2,...]}`
+
+**Second, Build Model.**
+
+```python
+from mtrec import MMoE
+
+task_names = ['task1', 'task2']
+num_experts = 3
+
+model = MMoE(task_names, num_experts, sparse_feature_columns)
+```
+
+for `sparse_feature_columns`,
+
+```python
+from mtrec.functions.feature_column import sparseFeature
+
+embed_dim = 4
+
+sparse_feature_columns = [sparseFeature(feat, len(data_df[feat].unique()), embed_dim=embed_dim) for feat in sparse_features]
+```
+
+see the `test/utils.py` file for specific details.
+
+**Third, Compile, Fit and Predict**
+
+```python
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.metrics import AUC
+
+model.compile(loss={'task1': 'binary_crossentropy', 'task2': 'binary_crossentropy'},
+                  optimizer=Adam(learning_rate=learning_rate),
+                  metrics=[AUC()])
+
+model.fit(
+        train_X,
+        train_y,
+        epochs=epochs,
+        batch_size=batch_size,
+    )
+
+pred = model.predict(test_X, batch_size=batch_size)
+```
+
 
 
 ## Model
 
-|                         Paper\|Model                         | Published in | Author/Group |
-| :----------------------------------------------------------: | :----------: | :----------: |
-| Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts\|**MMoE** |  KDD, 2018   |    Google    |
+| Model |                            Paper                             | Published | Author/Group |
+| :---: | :----------------------------------------------------------: | :-------: | :----------: |
+| MMoE  | Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts | KDD, 2018 |    Google    |
 
 
 
